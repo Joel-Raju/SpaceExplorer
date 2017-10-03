@@ -1,0 +1,3 @@
+rootProject.name = 'SpaceExplorer'
+
+include ':app'
