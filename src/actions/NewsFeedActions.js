@@ -1,14 +1,16 @@
 import { DOMParser } from 'xmldom';
+import _ from 'lodash';
 
-
+import { callXmlApi } from '../utils/ApiUtils';
 import { NEWS_FETCH_SUCCESS } from './types';
 import { NEWS_FEED_URL } from '../constants/ApiConstants';
+
 
 const parseNewsFeed = (textData) => {
   const newsFeedList = [];
   const doc = new DOMParser().parseFromString(textData, 'textxml');
   const items = doc.getElementsByTagName('item');
-  items.map(item =>
+  _.map(items, item =>
     newsFeedList.push({
       title: item.getElementsByTagName('title')[0].lastChild.data,
       description: item.getElementsByTagName('description')[0].lastChild.data,
@@ -28,5 +30,12 @@ export const fetchNewsFeed = () => {
       });
   };
 };
+
+// export const fetchNewsFeed = () => async (dispatch) => {
+//   const { error, responseText } = await callXmlApi(NEWS_FEED_URL);
+//   if (!error) {
+//     dispatch({ type: NEWS_FETCH_SUCCESS, payload: parseNewsFeed(responseText) });
+//   }
+// };
 
 export const test = () => {};

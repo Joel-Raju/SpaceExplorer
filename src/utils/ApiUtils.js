@@ -13,4 +13,15 @@ export const callApi = (url, options) =>
     ).catch(error => ({ error }));
 
 
-export const test = () => {};
+export const callXmlApi = (url, options) => {
+  fetch(url, options)
+    .then(
+      response => (response.ok ? response.text() : Promise.reject(response.text)),
+      error => Promise.reject(error),
+    )
+    .then(
+      responseText => ({ responseText }),
+      error => ({ error }),
+    )
+    .catch(error => ({ error }));
+};

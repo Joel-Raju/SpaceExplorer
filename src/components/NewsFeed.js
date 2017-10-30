@@ -3,6 +3,8 @@ import { FlatList } from 'react-native';
 import { connect } from 'react-redux';
 
 import { fetchNewsFeed } from '../actions';
+import NewsItem from './NewsItem';
+
 
 class NewsFeed extends Component {
   componentWillMount() {
@@ -15,19 +17,24 @@ class NewsFeed extends Component {
   }
 
   createDataSource({ newsFeed }) {
-    const ds = new FlatList.DataSource({
-      rowHasChanged: (r1, r2) => r1 !== r2,
-    });
-    this.dataSource = ds.cloneWithRows(newsFeed);
+    this.dataSource = newsFeed;
   }
 
-  renderRow(newsFeed) {
+  renderItem = ({ item }) => {
+    return (<NewsItem
+      title={item.title}
+      imageUrl={item.thumbnail}
+    />);
+  };
 
-  }
 
   render() {
-    return(
-      
+    return (
+      <FlatList
+        data={this.dataSource}
+        renderItem={this.renderItem}
+        keyExtractor={(item, index) => index}
+      />
     );
   }
 }

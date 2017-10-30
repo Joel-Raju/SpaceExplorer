@@ -10,7 +10,10 @@ import {
 const styles = StyleSheet.create({
   container: {
     height: 120,
-    margin: 8,
+    marginTop: 8,
+    marginLeft: 8,
+    marginRight: 8,
+    marginBottom: 1,
     backgroundColor: '#F8F8F8',
     elevation: 2,
     position: 'relative',
