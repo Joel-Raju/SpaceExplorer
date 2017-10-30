@@ -2,7 +2,11 @@ import { DOMParser } from 'xmldom';
 import _ from 'lodash';
 
 import { callXmlApi } from '../utils/ApiUtils';
-import { NEWS_FETCH_SUCCESS } from './types';
+import {
+  NEWS_FETCH_SUCCESS,
+  NEWS_FETCH_FAILED,
+  NEWS_FETCH_LOADING,
+} from './types';
 import { NEWS_FEED_URL } from '../constants/ApiConstants';
 
 
@@ -38,4 +42,14 @@ export const fetchNewsFeed = () => {
 //   }
 // };
 
-export const test = () => {};
+export const fetchNewsLoading = (isLoading) => {
+  return (dispatch) => {
+    dispatch({ type: NEWS_FETCH_LOADING, payload: isLoading });
+  };
+};
+
+export const fetchNewsFailed = (error) => {
+  return (dispatch) => {
+    dispatch({ type: NEWS_FETCH_FAILED, payload: error });
+  };
+};
