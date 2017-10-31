@@ -1,4 +1,4 @@
-export const callApi = (url, options) =>
+export const callJsonApi = (url, options) =>
   fetch(url, options)
     .then(
       response => (response.ok

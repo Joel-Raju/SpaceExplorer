@@ -25,12 +25,34 @@ const parseNewsFeed = (textData) => {
   return newsFeedList;
 };
 
+export const toggleNewsLoading = isLoading => ({
+  type: NEWS_FETCH_LOADING,
+  payload: isLoading,
+});
+
+export const fetchNewsFailed = isFailed => ({
+  type: NEWS_FETCH_FAILED,
+  payload: isFailed,
+});
+
 export const fetchNewsFeed = () => {
   return (dispatch) => {
+    dispatch(toggleNewsLoading(true));
+    dispatch(fetchNewsFailed(false));
     fetch(NEWS_FEED_URL)
-      .then(response => response.text())
-      .then((responseData) => {
+      .then(
+        response => response.text(),
+        error => Promise.reject(error),
+      ).then((responseData) => {
+        dispatch(toggleNewsLoading(false));
         dispatch({ type: NEWS_FETCH_SUCCESS, payload: parseNewsFeed(responseData) });
+      }, () => {
+        dispatch(toggleNewsLoading(false));
+        dispatch(fetchNewsFailed(true));
+      })
+      .catch(() => {
+        dispatch(toggleNewsLoading(false));
+        dispatch(fetchNewsFailed(true));
       });
   };
 };
@@ -41,15 +63,3 @@ export const fetchNewsFeed = () => {
 //     dispatch({ type: NEWS_FETCH_SUCCESS, payload: parseNewsFeed(responseText) });
 //   }
 // };
-
-export const fetchNewsLoading = (isLoading) => {
-  return (dispatch) => {
-    dispatch({ type: NEWS_FETCH_LOADING, payload: isLoading });
-  };
-};
-
-export const fetchNewsFailed = (error) => {
-  return (dispatch) => {
-    dispatch({ type: NEWS_FETCH_FAILED, payload: error });
-  };
-};
