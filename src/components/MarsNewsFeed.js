@@ -6,13 +6,13 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 
-import { fetchNewsFeed } from '../actions';
+import { fetchMarsNewsFeed } from '../actions';
 import NewsItem from './NewsItem';
 
 
-class NewsFeed extends Component {
+class MarsNewsFeed extends Component {
   componentWillMount() {
-    this.props.fetchNewsFeed();
+    this.props.fetchMarsNewsFeed();
     this.createDataSource(this.props);
   }
 
@@ -34,7 +34,7 @@ class NewsFeed extends Component {
   renderLoadingOrError = () => {
     if (this.props.feedsFetchFailed) {
       return (
-        <Text>There was a problem fetching NASA News Feeds.</Text>
+        <Text>There was a problem fetching NASA Mars News Feeds.</Text>
       );
     } else if (this.props.isFeedsLoading) {
       return (
@@ -64,4 +64,4 @@ const mapStateToProps = (state) => {
   return { feeds, feedsFetchFailed, isFeedsLoading };
 };
 
-export default connect(mapStateToProps, { fetchNewsFeed })(NewsFeed);
+export default connect(mapStateToProps, { fetchMarsNewsFeed })(MarsNewsFeed);
