@@ -20,8 +20,8 @@ class MarsNewsFeed extends Component {
     this.createDataSource(nextProps);
   }
 
-  createDataSource({ feeds }) {
-    this.dataSource = feeds;
+  createDataSource({ marsFeed }) {
+    this.dataSource = marsFeed;
   }
 
   renderItem = ({ item }) => {
@@ -60,8 +60,8 @@ class MarsNewsFeed extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { feeds, feedsFetchFailed, isFeedsLoading } = state.newsFeed;
-  return { feeds, feedsFetchFailed, isFeedsLoading };
+  const { marsFeed, marsFeedFetchFailed, isMarsFeedsLoading } = state.marsFeed;
+  return { marsFeed, marsFeedFetchFailed, isMarsFeedsLoading };
 };
 
 export default connect(mapStateToProps, { fetchMarsNewsFeed })(MarsNewsFeed);
