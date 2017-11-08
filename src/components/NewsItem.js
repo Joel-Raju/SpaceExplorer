@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
   View,
   Text,
   Image,
   StyleSheet,
+  TouchableWithoutFeedback,
 } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -40,33 +41,44 @@ const styles = StyleSheet.create({
   },
 });
 
-const NewsItem = (props) => {
-  const { title, imageUrl } = props;
-  const {
-    titleStyle, container, imageStyle, titleContainer,
-    imageContainer,
-  } = styles;
+export default class NewsItem extends Component {
+  componentWillMount() {
 
-  return (
-    <View style={container}>
-      <View style={imageContainer}>
-        <Image
-          source={{ uri: imageUrl }}
-          style={imageStyle}
-        />
-      </View>
-      <View style={titleContainer}>
-        <Text style={titleStyle}>{title}</Text>
-      </View>
-    </View>
-  );
-};
+  }
+  onItemPressed() {
+    this.props.navigation.navigate('NewsDetail', {
+      newsItem: this.props.newsItem,
+    });
+  }
+
+  render() {
+    const { title, thumbnail } = this.props.newsItem;
+    const {
+      container, imageContainer, imageStyle, titleContainer, titleStyle,
+    } = styles;
+    return (
+      <TouchableWithoutFeedback onPress={() => this.onItemPressed()}>
+        <View style={container}>
+          <View style={imageContainer}>
+            <Image
+              source={{ uri: thumbnail }}
+              style={imageStyle}
+            />
+          </View>
+          <View style={titleContainer}>
+            <Text style={titleStyle}>{title}</Text>
+          </View>
+        </View>
+      </TouchableWithoutFeedback>
+    );
+  }
+}
 
 
 NewsItem.propTypes = {
-  title: PropTypes.string.isRequired,
-  imageUrl: PropTypes.string.isRequired,
+  newsItem: PropTypes.shape({
+    title: PropTypes.string,
+    thumbnail: PropTypes.string,
+  }).isRequired,
+  navigation: PropTypes.object.isRequired,
 };
-
-
-export default NewsItem;

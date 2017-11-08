@@ -1,14 +1,30 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
   Text,
+  Image,
   Stylesheet,
+  View,
 } from 'react-native';
 
 
-export default class NewsDetail extends Component {
-  render() {
-    return (
-      <Text>asd</Text>
-    );
-  }
-}
+const NewsDetail = (props) => {
+  const {
+    title,
+    thumbnail,
+    description,
+    date,
+  } = props.navigation.state.params.newsItem;
+
+  return (
+    <View>
+      <Text>{title}</Text>
+      <Image
+        source={{ uri: thumbnail }}
+      />
+      <Text>{date}</Text>
+      <Text>{description}</Text>
+    </View>
+  );
+};
+
+export default NewsDetail;

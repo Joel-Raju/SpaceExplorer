@@ -26,17 +26,18 @@ class NewsFeed extends Component {
 
   renderItem = ({ item }) => {
     return (<NewsItem
-      title={item.title}
-      imageUrl={item.thumbnail}
+      newsItem={item}
+      navigation={this.props.navigation}
     />);
   };
 
   renderLoadingOrError = () => {
-    if (this.props.feedsFetchFailed) {
+    const { feedsFetchFailed, isFeedsLoading } = this.props;
+    if (feedsFetchFailed) {
       return (
         <Text>There was a problem fetching NASA News Feeds.</Text>
       );
-    } else if (this.props.isFeedsLoading) {
+    } else if (isFeedsLoading) {
       return (
         <Text>your feed is loading</Text>
       );

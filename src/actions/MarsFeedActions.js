@@ -42,5 +42,5 @@ export const fetchMarsNewsFeed = () => async (dispatch) => {
     dispatch(fetchMarsNewsFailed(true));
     return;
   }
-  dispatch({ type: MARS_NEWS_FETCH_SUCCESS, payload: parseMarsNewsFeed(json.newsitem) });
+  dispatch({ type: MARS_NEWS_FETCH_SUCCESS, payload: parseMarsNewsFeed(json.newsitems) });
 };

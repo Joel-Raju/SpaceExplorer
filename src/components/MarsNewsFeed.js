@@ -26,8 +26,8 @@ class MarsNewsFeed extends Component {
 
   renderItem = ({ item }) => {
     return (<NewsItem
-      title={item.title}
-      imageUrl={item.thumbnail}
+      newsItem={item}
+      navigation={this.props.navigation}
     />);
   };
 

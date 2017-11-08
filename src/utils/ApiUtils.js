@@ -1,4 +1,4 @@
-export const callJsonApi = (url, options) =>
+export const callJSONApi = (url, options) => {
   fetch(url, options)
     .then(
       response => (response.ok
@@ -11,17 +11,12 @@ export const callJsonApi = (url, options) =>
       json => ({ json }),
       error => ({ error }),
     ).catch(error => ({ error }));
+};
 
-
-export const callXmlApi = (url, options) => {
+export const callXMLApi = (url, options) => {
   fetch(url, options)
     .then(
-      response => (response.ok ? response.text() : Promise.reject(response.text)),
+      response => response.text(),
       error => Promise.reject(error),
-    )
-    .then(
-      responseText => ({ responseText }),
-      error => ({ error }),
-    )
-    .catch(error => ({ error }));
+    ).catch(error => ({ error }));
 };
