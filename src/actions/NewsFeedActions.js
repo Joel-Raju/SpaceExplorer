@@ -1,7 +1,7 @@
 import { DOMParser } from 'xmldom';
 import _ from 'lodash';
 
-import { callXmlApi } from '../utils/ApiUtils';
+import { callXMLApi } from '../utils/ApiUtils';
 import {
   NEWS_FETCH_SUCCESS,
   NEWS_FETCH_FAILED,
@@ -35,31 +35,14 @@ export const fetchNewsFailed = isFailed => ({
   payload: isFailed,
 });
 
-export const fetchNewsFeed = () => {
-  return (dispatch) => {
-    dispatch(toggleNewsLoading(true));
-    dispatch(fetchNewsFailed(false));
-    fetch(NEWS_FEED_URL)
-      .then(
-        response => response.text(),
-        error => Promise.reject(error),
-      ).then((responseData) => {
-        dispatch(toggleNewsLoading(false));
-        dispatch({ type: NEWS_FETCH_SUCCESS, payload: parseNewsFeed(responseData) });
-      }, () => {
-        dispatch(toggleNewsLoading(false));
-        dispatch(fetchNewsFailed(true));
-      })
-      .catch(() => {
-        dispatch(toggleNewsLoading(false));
-        dispatch(fetchNewsFailed(true));
-      });
-  };
+export const fetchNewsFeed = () => async (dispatch) => {
+  dispatch(toggleNewsLoading(true));
+  dispatch(fetchNewsFailed(false));
+  const { error, response } = await callXMLApi(NEWS_FEED_URL);
+  dispatch(toggleNewsLoading(false));
+  if (error) {
+    dispatch(fetchNewsFailed(true));
+    return;
+  }
+  dispatch({ type: NEWS_FETCH_SUCCESS, payload: parseNewsFeed(response) });
 };
-
-// export const fetchNewsFeed = () => async (dispatch) => {
-//   const { error, responseText } = await callXmlApi(NEWS_FEED_URL);
-//   if (!error) {
-//     dispatch({ type: NEWS_FETCH_SUCCESS, payload: parseNewsFeed(responseText) });
-//   }
-// };
