@@ -1,7 +1,7 @@
 import { DOMParser } from 'xmldom';
 import _ from 'lodash';
 
-import { callXmlApi } from '../utils/ApiUtils';
+import { callXMLApi } from '../utils/ApiUtils';
 import {
   PICTURE_OF_DAY_SUCCESS,
   PICTURE_OF_DAY_FAILED,
@@ -35,12 +35,13 @@ export const fetchPictureOfDayFailed = isFailed => ({
   payload: isFailed,
 });
 
-export const fetchPictureOfDay = () => {
-  return (dispatch) => {
-    fetch(PICTURE_OF_DAY_URL)
-      .then(response => response.text())
-      .then((responseData) => {
-        dispatch({ type: PICTURE_OF_DAY_SUCCESS, payload: parsePictureOfDay(responseData) });
-      });
-  };
+export const fetchPictureOfDay = () => async (dispatch) => {
+  fetchPictureOfDayLoading(true);
+  fetchPictureOfDayFailed(false);
+  const { error, response } = await callXMLApi(PICTURE_OF_DAY_URL);
+  fetchPictureOfDayLoading(false);
+  if (error) {
+    fetchPictureOfDayFailed(true);
+  }
+  dispatch({ type: PICTURE_OF_DAY_SUCCESS, payload: parsePictureOfDay(response) });
 };

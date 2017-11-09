@@ -8,7 +8,7 @@ import PictureOfDayReducer from './PictureOfDayReducer';
 const rootReducer = combineReducers({
   newsFeed: NewsFeedReducer,
   marsFeed: MarsFeedReducer,
-  pictureOfDay: PictureOfDayReducer,
+  picturesFeed: PictureOfDayReducer,
 });
 
 export default rootReducer;

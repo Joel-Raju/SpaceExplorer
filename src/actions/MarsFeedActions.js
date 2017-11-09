@@ -37,8 +37,8 @@ export const fetchMarsNewsFeed = () => async (dispatch) => {
   dispatch(toggleMarsNewsLoading(true));
   dispatch(fetchMarsNewsFailed(false));
   const { error, json } = await callJSONApi(MARS_NEWS_FEED_URL);
+  dispatch(toggleMarsNewsLoading(false));
   if (error) {
-    dispatch(toggleMarsNewsLoading(false));
     dispatch(fetchMarsNewsFailed(true));
     return;
   }
