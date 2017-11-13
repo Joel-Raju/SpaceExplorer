@@ -3,9 +3,9 @@ import _ from 'lodash';
 
 import { callXMLApi } from '../utils/ApiUtils';
 import {
-  PICTURE_OF_DAY_SUCCESS,
-  PICTURE_OF_DAY_FAILED,
-  PICTURE_OF_DAY_LOADING,
+  PICTURE_OF_DAY_FETCH_SUCCESS,
+  PICTURE_OF_DAY_FETCH_FAILED,
+  PICTURE_OF_DAY_FETCH_LOADING,
 } from './types';
 import { PICTURE_OF_DAY_URL } from '../constants/ApiConstants';
 
@@ -26,12 +26,12 @@ const parsePictureOfDay = (textData) => {
 };
 
 export const fetchPictureOfDayLoading = isLoading => ({
-  type: PICTURE_OF_DAY_LOADING,
+  type: PICTURE_OF_DAY_FETCH_LOADING,
   payload: isLoading,
 });
 
 export const fetchPictureOfDayFailed = isFailed => ({
-  type: PICTURE_OF_DAY_FAILED,
+  type: PICTURE_OF_DAY_FETCH_FAILED,
   payload: isFailed,
 });
 
@@ -42,6 +42,7 @@ export const fetchPictureOfDay = () => async (dispatch) => {
   fetchPictureOfDayLoading(false);
   if (error) {
     fetchPictureOfDayFailed(true);
+    return;
   }
-  dispatch({ type: PICTURE_OF_DAY_SUCCESS, payload: parsePictureOfDay(response) });
+  dispatch({ type: PICTURE_OF_DAY_FETCH_SUCCESS, payload: parsePictureOfDay(response) });
 };

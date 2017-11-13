@@ -3,6 +3,7 @@ import NewsFeed from './NewsFeed';
 import MarsNewsFeed from './MarsNewsFeed';
 import NewsDetail from './NewsDetail';
 import PictureOfDayList from './PictureOfDayList';
+import PictureFeedDetail from './PictureFeedDetail';
 
 
 const NavigationTabs = TabNavigator(
@@ -50,6 +51,12 @@ const AppNavigation = StackNavigator({
   },
   NewsDetail: {
     screen: NewsDetail,
+    navigationOptions: {
+      header: null,
+    },
+  },
+  PictureDetails: {
+    screen: PictureFeedDetail,
     navigationOptions: {
       header: null,
     },
