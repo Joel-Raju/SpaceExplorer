@@ -39,6 +39,7 @@ const NavigationTabs = TabNavigator(
         backgroundColor: 'white',
       },
     },
+    lazy: true,
   },
 );
 
